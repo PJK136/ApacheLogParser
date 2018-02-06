@@ -63,7 +63,7 @@ namespace url
             }
         }
 
-        size_t protocolPos = url.find("://");
+        /*size_t protocolPos = url.find("://");
         if (protocolPos < std::string::npos - 3)
         {
             return url.substr(protocolPos + 3);
@@ -71,19 +71,21 @@ namespace url
         else
         {
             return url;
-        }
+        }*/
+        return url;
     }
 
     static std::string trim(const std::string &url)
     {
-        constexpr auto DELIMITERS = {'?', '&', ';', '#'};
+        return url;
+        /*constexpr auto DELIMITERS = {'?', '&', ';', '#'};
         size_t split = std::string::npos;
         for (const auto &delim : DELIMITERS)
         {
             split = std::min(split, url.find(delim));
         }
 
-        return url.substr(0, split);
+        return url.substr(0, split);*/
     }
 
     static bool isExcluded(const std::string &url)
@@ -98,15 +100,17 @@ namespace request
 {
     static bool isAcceptedMethod(const std::string &method)
     {
-        constexpr auto METHODS = {"GET", "POST"};
-        return std::find(METHODS.begin(), METHODS.end(), method) != METHODS.end();
+        return true;
+        /*constexpr auto METHODS = {"GET", "POST"};
+        return std::find(METHODS.begin(), METHODS.end(), method) != METHODS.end();*/
     }
 
     static bool isAcceptedCode(int code)
     {
-        constexpr int HTTP_CODE_START = 200;
+        return true;
+/*        constexpr int HTTP_CODE_START = 200;
         constexpr int HTTP_CODE_END = 299;
-        return code >= HTTP_CODE_START && code <= HTTP_CODE_END;
+        return code >= HTTP_CODE_START && code <= HTTP_CODE_END;*/
     }
 
     static int getHour(const std::string &dateTime)
@@ -143,8 +147,8 @@ bool ApacheLogAnalyzer::LoadFile(std::string filename, bool exclude,
         HTTPRequest request;
         while (file >> request)
         {
-            if (request::isAcceptedCode(request.HTTPCode()) &&
-                    request::isAcceptedMethod(request.Method()))
+//            if (request::isAcceptedCode(request.HTTPCode()) &&
+//                    request::isAcceptedMethod(request.Method()))
             {
                 if (selectHour < 0 || request::getHour(request.DateTime()) == selectHour)
                 {
